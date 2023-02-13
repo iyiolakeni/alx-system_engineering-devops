@@ -1,2 +1,2 @@
 #!/bin/bash
-find ./GFG -empty
+find ./GFG -empty "%f\n"
