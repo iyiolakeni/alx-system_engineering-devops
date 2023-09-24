@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #Config client server
-Host 34.229.71.103
+Host school
+    Host 34.229.71.103
     User ubuntu
-    HashKnownHosts yes
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials no
     IdentityFile ~/.ssh/school
