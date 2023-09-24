@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #Config client server
-Host *
-    SendEnv LANG LC_*
+Host 34.229.71.103
+    User ubuntu
     HashKnownHosts yes
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials no
