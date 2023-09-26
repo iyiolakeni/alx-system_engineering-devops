@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
-# Install Nginx
+# Install `nginx
 sudo apt-get update
-
-sudo su apt-get -y install nginx
-
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
-if sudo su service nginx status | grep -q "active (running)"; then
-    sudo su service nginx stop
-fi
-
-sudo su nginx
-
-sudo su sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
-sudo su nginx -s reload
-exit 0
+sudo service nginx start
