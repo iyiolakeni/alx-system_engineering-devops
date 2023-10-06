@@ -33,7 +33,7 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-frontend  ehoneah-frontend-http
+frontend  iyiolakeni-frontend-http
         bind *:80
         mode http
 	http-request set-header X-Forwarded-Proto http
