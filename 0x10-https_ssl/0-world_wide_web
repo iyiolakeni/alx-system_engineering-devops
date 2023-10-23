@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# write a Bash script that will display information about the subdomains
+
+domain="$1"
+subdomain="$2"
+
+# Check if both domain and subdomain are provided
+if [ -z "$domain" ]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+if [ -z "$subdomain" ]; then
+    # Default subdomains to check
+    subdomains=("www" "lb-01" "web-01" "web-02")
+else
+    # Use the provided subdomain
+    subdomains=("$subdomain")
+fi
+
+for sub in "${subdomains[@]}"; do
+    result=$(dig "$sub.$domain" +short)
+    if [ -n "$result" ]; then
+        echo "The subdomain $sub is an A record and points to $result"
+    else
+        echo "The subdomain $sub does not exist or has no A record."
+    fi
+done
