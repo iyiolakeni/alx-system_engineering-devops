@@ -1,19 +1,7 @@
 #!/usr/bin/env bash
-# Configure Nginx to redirect /redirect_me
-
-# Define variables for old and new strings
-str_to_replace="server_name _;"
-new_string="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=bbVZo4Yw7pI;\n\t}"
-
-# Update the package list and install Nginx
+# Configure your Nginx server so that /redirect_me is redirecting to another page.
 sudo apt-get -y update
 sudo apt-get -y install nginx
-
-# Create a default Nginx index page
-echo "Hello World!" > /var/www/html/index.html
-
-# Use sed to replace the server block in the Nginx configuration
-sudo sed -i -e "s|$str_to_replace|$new_string|" /etc/nginx/sites-enabled/default
-
-# restart Nginx
+sudo ufw allow 'Nginx HTTP'
+sudo sed -i '/^}/ i\\tlocation /redirect_me {\n\t\trewrite ^/redirect_me/?$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}' /etc/nginx/sites-enabled/default
 sudo service nginx restart
