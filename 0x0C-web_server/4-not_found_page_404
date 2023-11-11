@@ -11,7 +11,7 @@ sudo sed -i -e "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enab
 # code to create error page and add a redirect for error 404
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+sudo sed -i -e "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
 # restart the server
 sudo service nginx restart
