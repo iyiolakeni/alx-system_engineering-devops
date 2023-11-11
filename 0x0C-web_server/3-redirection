@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
-# Script that configures a new Ubuntu machine to respect above requirements
+# Configure Nginx to redirect /redirect_me
 
-sudo apt-get update
+# Define variables for old and new strings
+str_to_replace="server_name _;"
+new_string="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=bbVZo4Yw7pI;\n\t}"
+
+# Update the package list and install Nginx
+sudo apt-get -y update
 sudo apt-get -y install nginx
-echo "Hello World!" | sudo tee /var/www/html/index.html
 
-redirection="server_name _;\n\trewrite ^\/redirect_me {\\n\\t\\treturn 301 https:\/\/www.youtube.com/watch?v=QH2-TGUlwu4\/;\\n\\t}/"
-sudo sed -i "s/server_name _;/$redirection/" /etc/nginx/sites-enabled/default
+# Create a default Nginx index page
+echo "Hello World!" > /var/www/html/index.html
 
-sudo service nginx start
+# Use sed to replace the server block in the Nginx configuration
+sudo sed -i -e "s|$str_to_replace|$new_string|" /etc/nginx/sites-enabled/default
+
+# restart Nginx
+sudo service nginx restart
