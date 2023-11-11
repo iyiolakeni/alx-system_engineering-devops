@@ -2,7 +2,7 @@
 # Configure Nginx to redirect /redirect_me and have a custom 404 page
 
 # Define variables for old and new strings
-rep_server="server_name _;"
+str_to_replace_server="server_name _;"
 new_server_block="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=bbVZo4Yw7pI;\n\t}"
 
 # New variables for custom 404 page
@@ -17,7 +17,7 @@ sudo apt-get -y install nginx
 echo "Hello World!" > /var/www/html/index.html
 
 # Use sed to replace the server block in the Nginx configuration
-sudo sed -i -e "s|$rep_server|$new_server_block|" /etc/nginx/sites-enabled/default
+sudo sed -i -e "s|$str_to_replace_server|$new_server_block|" /etc/nginx/sites-enabled/default
 
 # Use sed to add the custom 404 page configuration
 sudo sed -i "s|$str_to_find_404|$new_404_config|" /etc/nginx/sites-enabled/default
