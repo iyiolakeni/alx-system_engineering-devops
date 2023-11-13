@@ -37,15 +37,15 @@ frontend  iyiolakeni-frontend-http
         bind *:80
         mode http
 	http-request set-header X-Forwarded-Proto http
-        default_backend ehoneah-backend
+        default_backend iyiolakeni-backend
 
 frontend iyiolakeni-frontend-https
 	bind *:443 ssl crt /etc/haproxy/certs/www.ehoneah.tech.pem
 	http-request set-header X-Forwarded-Proto https
 	http-request redirect scheme https code 301 unless { ssl_fc }
-	default_backend ehoneah-backend
+	default_backend iyiolakeni-backend
 
 backend iyiolakeni-backend
         balance roundrobin
-        server 298838-web-01 34.229.71.103:80 check
-        server 298838-web-02 54.83.140.199:80 check
+        server 298838-web-01 54.227.222.235:80 check
+        server 298838-web-02 54.85.53.68:80 check
