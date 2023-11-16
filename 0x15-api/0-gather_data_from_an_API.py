@@ -1,50 +1,29 @@
 #!/usr/bin/python3
-"""
-Accessing a REST API for todo lists of employees
-"""
+"""Accessing a REST API for todo lists of employees"""
 
 import requests
 import sys
 
-def fetch_todo_progress(employee_id):
-    """
-    Fetch and display the employee's TODO list progress.
-    
-    Args:
-    - employee_id (int): The ID of the employee.
-    """
+
+def main():
+    """Fetch and store employee's TODO list information in a CSV file."""
+    employee_id = sys.argv[1]
     base_url = "https://jsonplaceholder.typicode.com/users"
     url = f"{base_url}/{employee_id}"
 
-    try:
-        # Fetch user data
-        response = requests.get(url)
-        response.raise_for_status()
-        employee_name = response.json().get('name')
+    response = requests.get(url)
+    username = response.json().get('username')
 
-        # Fetch TODO list data
-        todo_url = f"{url}/todos"
-        response = requests.get(todo_url)
-        response.raise_for_status()
-        tasks = response.json()
+    todo_url = f"{url}/todos"
+    response = requests.get(todo_url)
+    tasks = response.json()
 
-        # Filter completed tasks
-        done_tasks = [task for task in tasks if task.get('completed')]
-        num_completed_tasks = len(done_tasks)
+    with open(f'{employee_id}.csv', 'w') as file:
+        for task in tasks:
+            file.write('"{0}","{1}","{2}","{3}"\n'
+                       .format(employee_id, username,
+                               task.get('completed'), task.get('title')))
 
-        # Display information
-        print(f"Employee {employee_name} is done with tasks({num_completed_tasks}/{len(tasks)}):")
-        for task in done_tasks:
-            print(f"\t {task.get('title')}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        sys.exit(1)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} <employee_id>")
-        sys.exit(1)
-
-    employee_id = int(sys.argv[1])
-    fetch_todo_progress(employee_id)
+    main()
