@@ -1,9 +1,20 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 import requests
 
 def number_of_subscribers(subreddit):
+    """
+    Returns the number of subscribers for a given subreddit.
+
+    Args:
+    subreddit (str): The name of the subreddit.
+
+    Returns:
+    int: The number of subscribers.
+    """
+
     # Define the URL for the Reddit API
-    url = "https://api.reddit.com/r/{}/about".format(subreddit)
+    url = f"https://api.reddit.com/r/{subreddit}/about"
 
     # Set the headers for the API request
     headers = {
@@ -19,7 +30,7 @@ def number_of_subscribers(subreddit):
         data = response.json()
 
         # Return the number of subscribers
-        return data["subscribers"]
+        return data["data"]["subscribers"]
 
     # If the request was not successful, return 0
     return 0
